@@ -10,6 +10,5 @@ function setChannel(channel){
       method: "POST",
       url: "set.json",
       data: data,
-      success:()=>{console.log("Sent setting data!")}
       })
 }
