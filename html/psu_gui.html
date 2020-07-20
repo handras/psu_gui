@@ -31,9 +31,21 @@
                 <p id="ch1_amp_usage">2 A</p>
                 <form id="ch1">
                     <label for="ch1_volt">V:</label>
-                    <input type="number" id="ch1_volt" name="ch1_volt" min="0" max="30" step="0.5" value="24"><br><br>
+                    <input id="ch1_volt" name="ch1_volt"
+                           data-provide="slider"
+                           data-slider-min="0"
+                           data-slider-max="30"
+                           data-slider-step="0.5"
+                           data-slider-value="24"
+                           data-slider-tooltip="always"><br><br>
                     <label for="ch1_current">I:</label>
-                    <input type="number" id="ch1_current" name="ch1_current" min="0" max="7" step="0.5" value="1.5"><br><br>
+                    <input id="ch1_current" name="ch1_current"
+                           data-provide="slider"
+                           data-slider-min="0"
+                           data-slider-max="10"
+                           data-slider-step="0.5"
+                           data-slider-value="1.5"
+                           data-slider-tooltip="always"><br><br>
                     <input type="button" value="Set" onclick="setChannel(1);">
                 </form>
             </div>
@@ -44,9 +56,21 @@
                 <p id="ch2_amp_usage">2 A</p>
                 <form id="ch2">
                     <label for="ch2_volt">V:</label>
-                    <input type="number" id="ch2_volt" name="ch2_volt" min="0" max="30" step="0.5" value="24"><br><br>
+                    <input id="ch2_volt" name="ch2_volt"
+                           data-provide="slider"
+                           data-slider-min="0"
+                           data-slider-max="30"
+                           data-slider-step="0.5"
+                           data-slider-value="24"
+                           data-slider-tooltip="always"><br><br>
                     <label for="ch2_current">I:</label>
-                    <input type="number" id="ch2_current" name="ch2_current" min="0" max="7" step="0.5" value="1.5"><br><br>
+                    <input id="ch2_current" name="ch2_current"
+                           data-provide="slider"
+                           data-slider-min="0"
+                           data-slider-max="10"
+                           data-slider-step="0.5"
+                           data-slider-value="1.5"
+                           data-slider-tooltip="always"><br><br>
                     <input type="button" value="Set" onclick="setChannel(2);">
                 </form>
             </div>
