@@ -73,7 +73,10 @@ class MyServer(BaseHTTPRequestHandler):
     def do_POST(self):
         data = self.parse_POST()
         print('in do_POST:' + str(data))
-        self.send_response_only(200)
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b'ok')
 
 
 if __name__ == "__main__":

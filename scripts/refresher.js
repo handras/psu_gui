@@ -11,6 +11,7 @@ function update_usage(data){
 function refresh(){
     jQuery.ajax({
       method: "GET",
+      dataType: "json",
       url: "current.json",
       success:update_usage
     })
