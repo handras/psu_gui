@@ -12,6 +12,8 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
 
+    <!-- Bootstrap toggle button -->
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,7 +39,7 @@
                            data-slider-max="30"
                            data-slider-step="0.5"
                            data-slider-value="24"
-                           data-slider-tooltip="always"><br><br>
+                           data-slider-tooltip="show"><br><br>
                     <label for="ch1_current">I:</label>
                     <input id="ch1_current" name="ch1_current"
                            data-provide="slider"
@@ -45,8 +47,12 @@
                            data-slider-max="10"
                            data-slider-step="0.5"
                            data-slider-value="1.5"
-                           data-slider-tooltip="always"><br><br>
-                    <input type="button" value="Set" onclick="setChannel(1);">
+                           data-slider-tooltip="show"><br><br>
+                    <input type="checkbox"
+                           data-toggle="toggle"
+                           data-onstyle="outline-success"
+                           data-offstyle="outline-danger"
+                           onchange="setChannel(1, $(this).prop('checked'));">
                 </form>
             </div>
             <div class="col-sm">
@@ -62,7 +68,7 @@
                            data-slider-max="30"
                            data-slider-step="0.5"
                            data-slider-value="24"
-                           data-slider-tooltip="always"><br><br>
+                           data-slider-tooltip="show"><br><br>
                     <label for="ch2_current">I:</label>
                     <input id="ch2_current" name="ch2_current"
                            data-provide="slider"
@@ -70,8 +76,14 @@
                            data-slider-max="10"
                            data-slider-step="0.5"
                            data-slider-value="1.5"
-                           data-slider-tooltip="always"><br><br>
-                    <input type="button" value="Set" onclick="setChannel(2);">
+                           data-slider-tooltip="show"><br><br>
+                    <label for="ch2_state">state</label>
+                    <input id="ch2_state"
+                           type="checkbox"
+                           data-toggle="toggle"
+                           data-onstyle="outline-success"
+                           data-offstyle="outline-danger"
+                           onchange="setChannel(2, $(this).prop('checked'));">
                 </form>
             </div>
         </div>
@@ -98,6 +110,9 @@
 <!--<script src="/docs/4.5/dist/js/bootstrap.bundle.min.js"-->
 <!--        integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"-->
 <!--        crossorigin="anonymous"></script>-->
+
+<script async src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
 <script defer src="scripts/refresher.js"></script>
 <script defer src="scripts/setter.js"></script>
 </body>
