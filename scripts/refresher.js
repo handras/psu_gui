@@ -3,9 +3,11 @@
 var refresh_rate_value = 1500;
 
 function update_usage(data){
-    $.each(data, function( key, val ) {
-        document.getElementById(key).innerText = val;
-    });
+//    $.each(data, function( key, val ) {
+//        document.getElementById(key).innerText = val;
+//    });
+    ch1_v_display.setValue(data["ch1_volt_usage"].toLocaleString('en-US', { minimumFractionDigits: 2 }));
+    ch1_i_display.setValue(data["ch1_amp_usage"].toFixed(4));
 }
 
 function refresh(){

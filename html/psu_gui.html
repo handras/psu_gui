@@ -35,8 +35,15 @@
             <div class="col-sm">
                 <h4>Camera</h4>
                 <h5>Current usage</h5>
-                <p id="ch1_volt_usage">25 V</p>
-                <p id="ch1_amp_usage">2 A</p>
+                <div class="container">
+                    <div class="row" id="displayView"
+                         style="background-color: rgb(36, 20, 17); border: 3px solid rgb(153, 153, 153); ">
+                        <div style="padding:10px">
+                          <canvas id="ch1_v" width="260" height="140"></canvas>
+                          <canvas id="ch1_i" width="260" height="140"></canvas>
+                        </div>
+                    </div>
+                </div>
                 <form id="ch1">
                     <label for="ch1_volt">V:</label>
                     <input id="ch1_volt" name="ch1_volt"
@@ -120,6 +127,40 @@
 <!--        crossorigin="anonymous"></script>-->
 
 <script async src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+<!-- 7 segment display -->
+<script type="text/javascript" src="html/segment-display.js"></script>
+<script type="text/javascript">
+
+  var ch1_v_display = new SegmentDisplay("ch1_v");
+  ch1_v_display.pattern         = "##.##";
+  ch1_v_display.displayAngle    = 7;
+  ch1_v_display.digitHeight     = 20;
+  ch1_v_display.digitWidth      = 10;
+  ch1_v_display.digitDistance   = 2.5;
+  ch1_v_display.segmentWidth    = 2.1;
+  ch1_v_display.segmentDistance = 0.8;
+  ch1_v_display.segmentCount    = 7;
+  ch1_v_display.cornerType      = 1;
+  ch1_v_display.colorOn         = "#ff2c14";
+  ch1_v_display.colorOff        = "#3a161b";
+  ch1_v_display.draw();
+
+  var ch1_i_display = new SegmentDisplay("ch1_i");
+  ch1_i_display.pattern         = "##.##";
+  ch1_i_display.displayAngle    = 7;
+  ch1_i_display.digitHeight     = 20;
+  ch1_i_display.digitWidth      = 10;
+  ch1_i_display.digitDistance   = 2.5;
+  ch1_i_display.segmentWidth    = 2.1;
+  ch1_i_display.segmentDistance = 0.8;
+  ch1_i_display.segmentCount    = 7;
+  ch1_i_display.cornerType      = 1;
+  ch1_i_display.colorOn         = "#ff2c14";
+  ch1_i_display.colorOff        = "#3a161b";
+  ch1_i_display.draw();
+
+</script>
 
 <script defer src="scripts/refresher.js"></script>
 <script defer src="scripts/setter.js"></script>

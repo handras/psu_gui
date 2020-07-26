@@ -27,13 +27,19 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(bytes(open('scripts/setter.js').read(), "utf-8"))
 
+    def serve_display(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/javascript")
+        self.end_headers()
+        self.wfile.write(bytes(open('html/segment-display.js').read(), "utf-8"))
+
     def serve_current(self):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
         self.wfile.write(json.dumps({
-            'ch1_volt_usage': 1.92 + random(),
-            'ch1_amp_usage': 0.448 + random(),
+            'ch1_volt_usage': 24.92 + random(),
+            'ch1_amp_usage': 0.148 + random(),
             'ch2_volt_usage': 2.0005 + random(),
             'ch2_amp_usage': 3.24546 + random(),
         }
@@ -48,6 +54,7 @@ class MyServer(BaseHTTPRequestHandler):
         '/scripts/refresher.js': serve_refresher,
         '/scripts/setter.js': serve_setter,
         '/current.json': serve_current,
+        '/html/segment-display.js': serve_display,
         '/': serve_main,
     }
 
