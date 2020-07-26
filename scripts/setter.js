@@ -12,5 +12,16 @@ function setChannel(channel, turn_on){
       method: "POST",
       url: "set.json",
       data: data,
-      })
+      success: (data)=>{
+        console.log("PSU set successfully");
+        $("#success-alert").html("Values set successfully!");
+        $("#success-alert").show(150).delay(1550).hide(120);
+      },
+      timeout: 1800,
+      error: (jqXHR, status, error)=>{
+        console.log("Error occurred: " + status);
+        $("#failure-alert").html("Error occurred during setting the values: " + status);
+        $("#failure-alert").show(150).delay(1850).hide(120);
+      }
+    })
 }

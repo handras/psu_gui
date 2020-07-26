@@ -13,7 +13,13 @@ function refresh(){
       method: "GET",
       dataType: "json",
       url: "current.json",
-      success:update_usage
+      success:update_usage,
+      timeout: 1800,
+      error: (jqXHR, status, error)=>{
+        console.log("Error occurred: " + status);
+        $("#failure-alert").html("Error occurred during reading usage values: " + status);
+        $("#failure-alert").show(150).delay(1850).hide(120);
+      }
     })
     if (refresh_rate_value > 0.1)
         setTimeout(refresh,refresh_rate_value);

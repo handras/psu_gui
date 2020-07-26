@@ -22,7 +22,13 @@
 
     <div class="starter-template">
         <h1>CPX200D-P PSU control</h1>
-        <p class="lead">Use this to control the power supply unit.<br></p>
+        <p class="lead">This page is created to control the power supply unit for BU2W1083.<br></p>
+        <div id="success-alert" class="alert alert-success" role="alert" style="display:none">
+          A simple success alert-check it out!
+        </div>
+        <div id="failure-alert" class="alert alert-danger" role="alert" style="display:none">
+          A simple danger alert-check it out!
+        </div>
     </div>
     <div class="container">
         <div class="row">
@@ -48,7 +54,9 @@
                            data-slider-step="0.5"
                            data-slider-value="1.5"
                            data-slider-tooltip="show"><br><br>
-                    <input type="checkbox"
+                    <label for="ch1_state">State</label>
+                    <input id="ch1_state"
+                           type="checkbox"
                            data-toggle="toggle"
                            data-onstyle="outline-success"
                            data-offstyle="outline-danger"
@@ -77,7 +85,7 @@
                            data-slider-step="0.5"
                            data-slider-value="1.5"
                            data-slider-tooltip="show"><br><br>
-                    <label for="ch2_state">state</label>
+                    <label for="ch2_state">State</label>
                     <input id="ch2_state"
                            type="checkbox"
                            data-toggle="toggle"
