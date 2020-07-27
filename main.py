@@ -3,11 +3,21 @@ import cgi
 import json
 from random import random
 from urllib.parse import parse_qs
+from pathlib import Path
 
 hostName = "localhost"
 serverPort = 8080
 
 class MyServer(BaseHTTPRequestHandler):
+
+    def serve_file(self):
+        if Path(self.path[1:]).exists():
+            self.send_response(200)
+            self.send_header("Content-type", "text/javascript")
+            self.end_headers()
+            self.wfile.write(bytes(open(self.path[1:]).read(), "utf-8"))
+        else:
+            self.serve_notfound()
 
     def serve_main(self):
         self.send_response(200)
@@ -15,33 +25,15 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(bytes(open('html/psu_gui.html').read(), "utf-8"))
 
-    def serve_refresher(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/javascript")
-        self.end_headers()
-        self.wfile.write(bytes(open('scripts/refresher.js').read(), "utf-8"))
-
-    def serve_setter(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/javascript")
-        self.end_headers()
-        self.wfile.write(bytes(open('scripts/setter.js').read(), "utf-8"))
-
-    def serve_display(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/javascript")
-        self.end_headers()
-        self.wfile.write(bytes(open('html/segment-display.js').read(), "utf-8"))
-
     def serve_current(self):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
         self.wfile.write(json.dumps({
-            'ch1_volt_usage': 24.92 + random(),
-            'ch1_amp_usage': 0.148 + random(),
-            'ch2_volt_usage': 2.0005 + random(),
-            'ch2_amp_usage': 3.24546 + random(),
+            'ch1_volt_usage': f'{24.92 + random():05.2f}',
+            'ch1_amp_usage' : f'{0.148 + random():05.2f}',
+            'ch2_volt_usage': f'{2.004 + random():05.2f}',
+            'ch2_amp_usage' : f'{3.246 + random():05.2f}',
         }
         ).encode('utf-8'))
 
@@ -51,10 +43,11 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
 
     resources = {
-        '/scripts/refresher.js': serve_refresher,
-        '/scripts/setter.js': serve_setter,
+        '/scripts/refresher.js': serve_file,
+        '/scripts/setter.js': serve_file,
+        '/scripts/my_displays.js': serve_file,
+        '/scripts/segment-display.js': serve_file,
         '/current.json': serve_current,
-        '/html/segment-display.js': serve_display,
         '/': serve_main,
     }
 
