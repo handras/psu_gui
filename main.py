@@ -5,10 +5,20 @@ from random import random
 from urllib.parse import parse_qs
 from pathlib import Path
 
+try:
+    from pyci2.core.psu_api import PSU
+except:
+    pass
+
 hostName = "localhost"
 serverPort = 8080
 
 class MyServer(BaseHTTPRequestHandler):
+
+    try:
+        p = PSU()
+    except:
+        pass
 
     def serve_file(self):
         if Path(self.path[1:]).exists():
@@ -29,18 +39,33 @@ class MyServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
-        self.wfile.write(json.dumps({
-            'ch1_volt_usage': f'{24.92 + random():05.2f}',
-            'ch1_amp_usage' : f'{0.148 + random():05.2f}',
-            'ch2_volt_usage': f'{2.004 + random():05.2f}',
-            'ch2_amp_usage' : f'{3.246 + random():05.2f}',
-        }
-        ).encode('utf-8'))
+        try:
+            self.wfile.write(json.dumps(self.p.readback_status).encode('utf-8'))
+        except:
+            self.wfile.write(json.dumps({
+                'ch1_volt_usage': f'{24.92 + random():05.2f}',
+                'ch1_amp_usage' : f'{0.148 + random():05.2f}',
+                'ch2_volt_usage': f'{2.004 + random():05.2f}',
+                'ch2_amp_usage' : f'{3.246 + random():05.2f}',
+            }
+            ).encode('utf-8'))
 
     def serve_notfound(self):
         self.send_response(404)
         self.send_header("Content-type", "text/html")
         self.end_headers()
+
+    def _set_channel(self, data):
+
+        def clean(data):
+            return round(float(data[0]),2)
+
+        if data.get(b'ch1_volt'):
+            # print(f'set ch1 v to {clean(data[b"ch1_volt"])}, i to {clean(data[b"ch1_current"])}')
+            self.p.turn_on(1, clean(data[b"ch1_volt"]), data[b"ch1_current"])
+        else:
+            # print(f'set ch2 v to {clean(data[b"ch2_volt"])}, i to {clean(data[b"ch2_current"])}')
+            self.p.turn_on(2, clean(data[b"ch2_volt"]), data[b"ch2_current"])
 
     resources = {
         '/scripts/refresher.js': serve_file,
@@ -72,7 +97,12 @@ class MyServer(BaseHTTPRequestHandler):
 
     def do_POST(self):
         data = self.parse_POST()
-        print('in do_POST:' + str(data))
+        if self.path == '/set.json':
+            # print('set.json in do_POST:' + str(data))
+            self._set_channel(data)
+        if self.path == '/setOff.json':
+            # print(f'turning off: {int(data[b"ch"][0])}')
+            self.p.turn_off(int(data[b"ch"][0]))
         self.send_response(200)
         self.send_header("Content-type", "text/plain")
         self.end_headers()

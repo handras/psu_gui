@@ -25,3 +25,13 @@ function setChannel(channel, turn_on){
       }
     })
 }
+
+function setChannelOff(channel){
+    console.log("SettingOff channel "+ channel);
+    $.ajax({
+      method: "POST",
+      url: "setOff.json",
+      data:{"ch":channel},
+      success:()=>{console.log("Sent turnoff data!")}
+      })
+}
