@@ -3,7 +3,9 @@
 var refresh_rate_value = 1500;
 
 function update_usage(data){
-    console.log("new data"+data)
+//    console.log("new data",data)
+    ping = new Date - ping;
+    $('#network_latency').html("Network latency (ms): " + ping);
     ch1_v_display.setValue(data["ch1_volt_usage"]);
     ch1_i_display.setValue(data["ch1_amp_usage"]);
 
@@ -12,20 +14,24 @@ function update_usage(data){
 }
 
 function refresh(){
+    ping = new Date;
     jQuery.ajax({
       method: "GET",
       dataType: "json",
       url: "current.json",
       success:update_usage,
-      timeout: 1800,
+      timeout: 3200,
       error: (jqXHR, status, error)=>{
         console.log("Error occurred: " + status);
         $("#failure-alert").html("Error occurred during reading usage values: " + status);
-        $("#failure-alert").show(150).delay(1850).hide(120);
+        $("#failure-alert").show(150).delay(2050).hide(120);
+      },
+      complete:()=>{
+        if (refresh_rate_value > 0.1)
+            setTimeout(refresh,refresh_rate_value);
       }
     })
-    if (refresh_rate_value > 0.1)
-        setTimeout(refresh,refresh_rate_value);
+
 }
 
 // Instantiate a slider
@@ -50,4 +56,5 @@ refreshSlider.on('slideStop', function(new_value){
 })
 
 console.log("refresher script start");
+ping = new Date;
 refresh();
