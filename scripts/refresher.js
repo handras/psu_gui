@@ -8,9 +8,25 @@ function update_usage(data){
     $('#network_latency').html("Network latency (ms): " + ping);
     ch1_v_display.setValue(data["ch1_volt_usage"]);
     ch1_i_display.setValue(data["ch1_amp_usage"]);
+    $("#ch1_state").bootstrapToggle('enable')
+    if (data["ch1_state"] == 1){
+        $("#ch1_state").bootstrapToggle('on')
+    }
+    else{
+        $("#ch1_state").bootstrapToggle('off')
+    }
+    $("#ch1_state").bootstrapToggle('disable')
 
     ch2_v_display.setValue(data["ch2_volt_usage"]);
     ch2_i_display.setValue(data["ch2_amp_usage"]);
+    $("#ch2_state").bootstrapToggle('enable')
+    if (data["ch2_state"] == 1){
+        $("#ch2_state").bootstrapToggle('on')
+    }
+    else{
+        $("#ch2_state").bootstrapToggle('off')
+    }
+    $("#ch2_state").bootstrapToggle('disable')
 }
 
 function refresh(){

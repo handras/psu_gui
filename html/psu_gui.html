@@ -10,10 +10,12 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css">
 
     <!-- Bootstrap toggle button -->
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+          rel="stylesheet">
     <style>
         .display {
             background-color: rgb(36, 20, 17);
@@ -34,6 +36,13 @@
             border-width: 4px;
         }
 
+        .canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
     </style>
 </head>
 
@@ -44,111 +53,143 @@
     <div class="starter-template">
         <h1>CPX200D-P PSU control</h1>
         <p class="lead">This page is created to control the power supply unit for BU2W1083.<br></p>
-        <p>The selected control values are sent to the PSU every time when the state is changed from <span class="text-danger font-weight-bold">Off</span> to <span class="text-success font-weight-bold">On</span>.</p>
-        <div id="success-alert" class="alert alert-success" role="alert" style="display:none; position: absolute; top: 50px; right: 10px">
-          A simple success alert-check it out!
+        <p>The selected control values are sent to the PSU every time when the <span class="text-success font-weight-bold">On</span>
+            button is clicked.
+        </p>
+        <div id="success-alert" class="alert alert-success" role="alert"
+             style="display:none; position: absolute; top: 50px; right: 10px">
+            A simple success alert-check it out!
         </div>
-        <div id="failure-alert" class="alert alert-danger" role="alert" style="display:none; position: absolute; top: 20px; right: 10px">
-          A simple danger alert-check it out!
+        <div id="failure-alert" class="alert alert-danger" role="alert"
+             style="display:none; position: absolute; top: 20px; right: 10px">
+            A simple danger alert-check it out!
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-sm">
                 <h4>Camera</h4>
-                <h5>Current usage</h5>
-                <div class="container">
-                    <div class="row" style="align-items: center">
-                        <div class="display">
-                            <div style="padding:10px;">
-                              <canvas id="ch1_v" width="155" height="70"></canvas>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Current usage</h5>
+                        <div class="container">
+                            <div class="row" style="align-items: center">
+                                <div class="display">
+                                    <div style="padding:10px;">
+                                        <canvas id="ch1_v" width="155" height="70"></canvas>
+                                    </div>
+                                </div>
+                                <span class="text-monospace"><h2>Volts</h2></span>
+                            </div>
+                            <div class="row" style="align-items: center">
+                                <div class="display">
+                                    <div style="padding:10px;">
+                                        <canvas id="ch1_i" width="155" height="70"></canvas>
+                                    </div>
+                                </div>
+                                <span class="text-monospace"><h2>Amps</h2></span>
+                            </div>
+                            <div class="row" style="align-items: center">
+                                <span class="text-monospace"><h3>Output</h3></span>
+                                <input id="ch1_state"
+                                       disabled
+                                       type="checkbox"
+                                       data-toggle="toggle"
+                                       data-onstyle="outline-success"
+                                       data-offstyle="outline-danger">
                             </div>
                         </div>
-                        <span class="text-monospace"><h2>Volts</h2></span>
-                    </div>
-                    <div class="row" style="align-items: center">
-                        <div class="display">
-                            <div style="padding:10px;">
-                              <canvas id="ch1_i" width="155" height="70"></canvas>
-                            </div>
-                        </div>
-                        <span class="text-monospace"><h2>Amps</h2></span>
                     </div>
                 </div>
-                <h5>Control</h5>
-                <form id="ch1">
-                    <label for="ch1_volt">V:</label>
-                    <input id="ch1_volt" name="ch1_volt"
-                           data-provide="slider"
-                           data-slider-min="0"
-                           data-slider-max="30"
-                           data-slider-step="0.5"
-                           data-slider-value="24"
-                           data-slider-tooltip="show"><br><br>
-                    <label for="ch1_current">I:</label>
-                    <input id="ch1_current" name="ch1_current"
-                           data-provide="slider"
-                           data-slider-min="0"
-                           data-slider-max="10"
-                           data-slider-step="0.5"
-                           data-slider-value="1.5"
-                           data-slider-tooltip="show"><br><br>
-                    <label for="ch1_state">State</label>
-                    <input id="ch1_state"
-                           type="checkbox"
-                           data-toggle="toggle"
-                           data-onstyle="outline-success"
-                           data-offstyle="outline-danger"
-                           onchange="setChannel(1, $(this).prop('checked'));">
-                </form>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Control</h5>
+                        <form id="ch1">
+                            <label for="ch1_volt">V:</label>
+                            <input id="ch1_volt" name="ch1_volt"
+                                   data-provide="slider"
+                                   data-slider-min="0"
+                                   data-slider-max="30"
+                                   data-slider-step="0.5"
+                                   data-slider-value="24"
+                                   data-slider-tooltip="show"><br><br>
+                            <label for="ch1_current">I:</label>
+                            <input id="ch1_current" name="ch1_current"
+                                   data-provide="slider"
+                                   data-slider-min="0"
+                                   data-slider-max="10"
+                                   data-slider-step="0.5"
+                                   data-slider-value="1.5"
+                                   data-slider-tooltip="show"><br>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-success" onclick="setChannel(1,'true')">On</button>
+                                <button type="button" class="btn btn-danger" onclick="setChannel(1,'false')">Off</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="col-sm">
                 <h4>Radar</h4>
-                <h5>Current usage</h5>
-                <div class="container">
-                    <div class="row" style="align-items: center">
-                        <div class="display">
-                            <div style="padding:10px;">
-                              <canvas id="ch2_v" width="155" height="70"></canvas>
+                 <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Current usage</h5>
+                        <div class="container">
+                            <div class="row" style="align-items: center">
+                                <div class="display">
+                                    <div style="padding:10px;">
+                                        <canvas id="ch2_v" width="155" height="70"></canvas>
+                                    </div>
+                                </div>
+                                <span class="text-monospace"><h2>Volts</h2></span>
+                            </div>
+                            <div class="row" style="align-items: center">
+                                <div class="display">
+                                    <div style="padding:10px;">
+                                        <canvas id="ch2_i" width="155" height="70"></canvas>
+                                    </div>
+                                </div>
+                                <span class="text-monospace"><h2>Amps</h2></span>
+                            </div>
+                            <div class="row" style="align-items: center">
+                                <span class="text-monospace"><h3>Output</h3></span>
+                                <input id="ch2_state"
+                                       disabled
+                                       type="checkbox"
+                                       data-toggle="toggle"
+                                       data-onstyle="outline-success"
+                                       data-offstyle="outline-danger">
                             </div>
                         </div>
-                        <span class="text-monospace"><h2>Volts</h2></span>
                     </div>
-                    <div class="row" style="align-items: center">
-                        <div class="display">
-                            <div style="padding:10px;">
-                              <canvas id="ch2_i" width="155" height="70"></canvas>
+                 </div>
+                 <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Control</h5>
+                        <form id="ch2">
+                            <label for="ch2_volt">V:</label>
+                            <input id="ch2_volt" name="ch2_volt"
+                                   data-provide="slider"
+                                   data-slider-min="0"
+                                   data-slider-max="30"
+                                   data-slider-step="0.5"
+                                   data-slider-value="24"
+                                   data-slider-tooltip="show"><br><br>
+                            <label for="ch2_current">I:</label>
+                            <input id="ch2_current" name="ch2_current"
+                                   data-provide="slider"
+                                   data-slider-min="0"
+                                   data-slider-max="10"
+                                   data-slider-step="0.5"
+                                   data-slider-value="1.5"
+                                   data-slider-tooltip="show"><br>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-success" onclick="setChannel(2,'true')">On</button>
+                                <button type="button" class="btn btn-danger" onclick="setChannel(2,'false')">Off</button>
                             </div>
-                        </div>
-                        <span class="text-monospace"><h2>Amps</h2></span>
+                        </form>
                     </div>
-                </div>
-                <h5>Control</h5>
-                <form id="ch2">
-                    <label for="ch2_volt">V:</label>
-                    <input id="ch2_volt" name="ch2_volt"
-                           data-provide="slider"
-                           data-slider-min="0"
-                           data-slider-max="30"
-                           data-slider-step="0.5"
-                           data-slider-value="24"
-                           data-slider-tooltip="show"><br><br>
-                    <label for="ch2_current">I:</label>
-                    <input id="ch2_current" name="ch2_current"
-                           data-provide="slider"
-                           data-slider-min="0"
-                           data-slider-max="10"
-                           data-slider-step="0.5"
-                           data-slider-value="1.5"
-                           data-slider-tooltip="show"><br><br>
-                    <label for="ch2_state">State</label>
-                    <input id="ch2_state"
-                           type="checkbox"
-                           data-toggle="toggle"
-                           data-onstyle="outline-success"
-                           data-offstyle="outline-danger"
-                           onchange="setChannel(2, $(this).prop('checked'));">
-                </form>
+                 </div>
             </div>
         </div>
     </div>

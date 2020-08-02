@@ -44,8 +44,10 @@ class MyServer(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(self.p.readback_status).encode('utf-8'))
         except:
             self.wfile.write(json.dumps({
+                'ch1_state': '0',
                 'ch1_volt_usage': f'{24.92 + random():05.2f}',
                 'ch1_amp_usage' : f'{0.148 + random():05.2f}',
+                'ch2_state': '1',
                 'ch2_volt_usage': f'{2.004 + random():05.2f}',
                 'ch2_amp_usage' : f'{3.246 + random():05.2f}',
             }
