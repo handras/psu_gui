@@ -24,6 +24,7 @@ class MyServer(BaseHTTPRequestHandler):
         if Path(self.path[1:]).exists():
             self.send_response(200)
             self.send_header("Content-type", "text/javascript")
+            self.send_header("cache-control", "public, max-age=352800")
             self.end_headers()
             self.wfile.write(bytes(open(self.path[1:]).read(), "utf-8"))
         else:
