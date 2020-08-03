@@ -6,8 +6,8 @@ function update_usage(data){
 //    console.log("new data",data)
     ping = new Date - ping;
     $('#network_latency').html("Network latency (ms): " + ping);
-    ch1_v_display.setValue(data["ch1_volt_usage"]);
-    ch1_i_display.setValue(data["ch1_amp_usage"]);
+    ch1_v_display.setValue(data["ch1_volt_readback"]);
+    ch1_i_display.setValue(data["ch1_amp_readback"]);
     $("#ch1_state").bootstrapToggle('enable')
     if (data["ch1_state"] == 1){
         $("#ch1_state").bootstrapToggle('on')
@@ -17,8 +17,8 @@ function update_usage(data){
     }
     $("#ch1_state").bootstrapToggle('disable')
 
-    ch2_v_display.setValue(data["ch2_volt_usage"]);
-    ch2_i_display.setValue(data["ch2_amp_usage"]);
+    ch2_v_display.setValue(data["ch2_volt_readback"]);
+    ch2_i_display.setValue(data["ch2_amp_readback"]);
     $("#ch2_state").bootstrapToggle('enable')
     if (data["ch2_state"] == 1){
         $("#ch2_state").bootstrapToggle('on')

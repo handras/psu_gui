@@ -45,11 +45,11 @@ class MyServer(BaseHTTPRequestHandler):
         except:
             self.wfile.write(json.dumps({
                 'ch1_state': '0',
-                'ch1_volt_usage': f'{24.92 + random():05.2f}',
-                'ch1_amp_usage' : f'{0.148 + random():05.2f}',
+                'ch1_volt_readback': f'{24.92 + random():05.2f}',
+                'ch1_amp_readback' : f'{0.148 + random():05.2f}',
                 'ch2_state': '1',
-                'ch2_volt_usage': f'{2.004 + random():05.2f}',
-                'ch2_amp_usage' : f'{3.246 + random():05.2f}',
+                'ch2_volt_readback': f'{2.004 + random():05.2f}',
+                'ch2_amp_readback' : f'{3.246 + random():05.2f}',
             }
             ).encode('utf-8'))
 
@@ -64,11 +64,19 @@ class MyServer(BaseHTTPRequestHandler):
             return round(float(data[0]),2)
 
         if data.get(b'ch1_volt'):
-            # print(f'set ch1 v to {clean(data[b"ch1_volt"])}, i to {clean(data[b"ch1_current"])}')
-            self.p.turn_on(1, clean(data[b"ch1_volt"]), data[b"ch1_current"])
+            if data.get(b'ch1_state')[0] == b'true':
+                # print(f'set ch1 v to {clean(data[b"ch1_volt"])}, i to {clean(data[b"ch1_current"])}')
+                self.p.turn_on(1, clean(data[b"ch1_volt"]), data[b"ch1_current"])
+            else:
+                # print(f'set ch1 v to off')
+                self.p.turn_off(1)
         else:
-            # print(f'set ch2 v to {clean(data[b"ch2_volt"])}, i to {clean(data[b"ch2_current"])}')
-            self.p.turn_on(2, clean(data[b"ch2_volt"]), data[b"ch2_current"])
+            if data.get(b'ch2_state')[0] == b'true':
+                # print(f'set ch2 v to {clean(data[b"ch2_volt"])}, i to {clean(data[b"ch2_current"])}')
+                self.p.turn_on(2, clean(data[b"ch2_volt"]), data[b"ch2_current"])
+            else:
+                # print(f'set ch2 v to off')
+                self.p.turn_off(2)
 
     resources = {
         '/scripts/refresher.js': serve_file,
